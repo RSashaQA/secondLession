@@ -14,7 +14,7 @@ import java.net.URL;
 
 public class firstTest {
     private AppiumDriver driver;
-
+//123
     @Before
     public void setUp() throws Exception {
         DesiredCapabilities capabilities = new DesiredCapabilities();
