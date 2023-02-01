@@ -1,3 +1,4 @@
+import com.sun.javafx.PlatformUtil;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import org.junit.After;
@@ -24,11 +25,14 @@ public class firstTest {
         capabilities.setCapability("automationName", "Appium");
         capabilities.setCapability("appPackage", "org.wikipedia");
         capabilities.setCapability("appActivity", ".main.MainActivity");
-        capabilities.setCapability("app", "/home/sanek/IdeaProjects/JavaAutomation/apks/org.wikipedia.apk");
-        //capabilities.setCapability("systemPort","4723");
+        if (PlatformUtil.isWindows()){
+            capabilities.setCapability("app", "D:\\LearnQA\\AutoQA\\secondLession\\apks\\org.wikipedia.apk");
+        }
+        if (PlatformUtil.isLinux()){
+            capabilities.setCapability("app", "/home/sanek/IdeaProjects/JavaAutomation/apks/org.wikipedia.apk");
+        }
 
         driver = new AndroidDriver(new URL("http://localhost:4723/wd/hub"), capabilities);
-
     }
 
     @After
