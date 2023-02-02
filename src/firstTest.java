@@ -15,7 +15,7 @@ import java.net.URL;
 
 public class firstTest {
     private AppiumDriver driver;
-//123
+
     @Before
     public void setUp() throws Exception {
         DesiredCapabilities capabilities = new DesiredCapabilities();
@@ -41,11 +41,11 @@ public class firstTest {
     }
 
     @Test
-    public void testFirstTest()
+    public void testSearchJava()
     {
         waitForElementByXpathAndClick(
                 "//*[contains(@text,'Search Wikipedia')]",
-                "Cannot find search Wikipedia input",
+                "Cannot find 'Search Wikipedia' input",
                 5
         );
 
@@ -60,6 +60,27 @@ public class firstTest {
                 "//*[@resource-id='org.wikipedia:id/page_list_item_container']//*[@text='Object-oriented programming language']",
                 "Cant find 'Object-oriented programming language'",
                 15
+        );
+    }
+    @Test
+    public void testCancelSearch()
+    {
+        waitForElementPresentByIdAndClick(
+                "org.wikipedia:id/search_container",
+                "Cannot find 'Search Wikipedia' input",
+                5
+        );
+
+        waitForElementPresentByIdAndClick(
+                "org.wikipedia:id/search_close_btn",
+                "Cannot find X to cansel search",
+                5
+        );
+
+        waitForElementNotPresent(
+                "org.wikipedia:id/search_close_btn",
+                "X is still on page!!!",
+                5
         );
     }
 
@@ -87,4 +108,52 @@ public class firstTest {
         element.sendKeys(value);
         return element;
     }
+
+    private WebElement waitForElementPresentById(String id, String error_message, long timeoutInSeconds) {
+        WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
+        wait.withMessage(error_message + "\n");
+        By by = By.id(id);
+        return wait.until(
+                ExpectedConditions.presenceOfElementLocated(by)
+        );
+    }
+
+    private WebElement waitForElementPresentByIdAndClick(String id, String error_message, long timeoutInSeconds)
+    {
+        sleep();
+        WebElement element = waitForElementPresentById(id, error_message, timeoutInSeconds);
+        element.click();
+        return element;
+    }
+
+    private boolean  waitForElementNotPresent(String id, String error_message, long timeoutInSeconds)
+    {
+        sleep();
+        WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
+        wait.withMessage(error_message + "\n");
+        By by = By.id(id);
+        return wait.until(
+                ExpectedConditions.invisibilityOfElementLocated(by)
+        );
+    }
+
+    private void sleep() {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private WebElement waitForElementByIdToBeClickable(String id, String error_message, long timeoutInSeconds)
+    {
+        WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
+        wait.withMessage(error_message + "\n");
+        By by = By.id(id);
+        return wait.until(
+                ExpectedConditions.elementToBeClickable(by)
+        );
+    }
+
+
 }
