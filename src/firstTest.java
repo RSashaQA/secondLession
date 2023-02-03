@@ -25,11 +25,10 @@ public class firstTest {
         capabilities.setCapability("automationName", "Appium");
         capabilities.setCapability("appPackage", "org.wikipedia");
         capabilities.setCapability("appActivity", ".main.MainActivity");
-        if (PlatformUtil.isWindows()){
-            capabilities.setCapability("app", "D:\\LearnQA\\AutoQA\\secondLession\\apks\\org.wikipedia.apk");
-        }
-        if (PlatformUtil.isLinux()){
+        if (System.getProperty("os.name").equals("Linux")) {
             capabilities.setCapability("app", "/home/sanek/IdeaProjects/JavaAutomation/apks/org.wikipedia.apk");
+        } else {
+            capabilities.setCapability("app", "D:\\LearnQA\\AutoQA\\secondLession\\apks\\org.wikipedia.apk");
         }
 
         driver = new AndroidDriver(new URL("http://localhost:4723/wd/hub"), capabilities);
