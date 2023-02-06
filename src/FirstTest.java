@@ -19,7 +19,7 @@ import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
 
 
-public class firstTest {
+public class FirstTest {
     private AppiumDriver driver;
 
     @Before
@@ -295,11 +295,14 @@ public class firstTest {
                 5
         );
 
-        waitForElementPresent(
+        List<WebElement> my_elements = waitForElementsPresents(
                 By.id("org.wikipedia:id/search_results_list"),
                 "Search results not found",
                 30
         );
+
+        Assert.assertTrue("Size of elements is 0",my_elements.size() > 1);
+
 
         waitForElementAndClick(
                 By.id("org.wikipedia:id/search_close_btn"),
@@ -329,17 +332,11 @@ public class firstTest {
                 5
         );
 
-        waitForElementPresent(
-                By.id("org.wikipedia:id/search_results_list"),
-                "Search results not found",
-                30
-        );
-
-        List<WebElement> myElements = Collections.singletonList(waitForElementPresent(
+        List<WebElement> myElements = waitForElementsPresents(
                 By.xpath("//*[@resource-id ='org.wikipedia:id/page_list_item_title']"),
                 "Cant find page list item title",
                 5
-        ));
+        );
 
         for (WebElement myElement : myElements) {
             String desired_value = "java";
@@ -510,6 +507,14 @@ public class firstTest {
         wait.withMessage(error_message + "\n");
         return wait.until(
                 ExpectedConditions.presenceOfElementLocated(by)
+        );
+    }
+
+    private List<WebElement> waitForElementsPresents(By by, String error_message, long timeoutInSeconds) {
+        WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
+        wait.withMessage(error_message + "\n");
+        return wait.until(
+                ExpectedConditions.presenceOfAllElementsLocatedBy(by)
         );
     }
 
