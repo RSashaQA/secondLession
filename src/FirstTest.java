@@ -1,4 +1,3 @@
-import org.apache.xpath.operations.Bool;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -6,7 +5,6 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.ScreenOrientation;
-import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -39,7 +37,11 @@ public class FirstTest {
         }
 
         driver = new AndroidDriver(new URL("http://localhost:4723/wd/hub"), capabilities);
+
+        String orientation = String.valueOf(driver.getOrientation());
+        if (orientation.equals("LANDSCAPE") == true) driver.rotate(ScreenOrientation.PORTRAIT);
     }
+
 
     @After
     public void tearDown() {
@@ -663,8 +665,7 @@ public class FirstTest {
     }
 
     @Test
-    public void testEx6assertElementPresent()
-    {
+    public void testEx6assertElementPresent() {
         waitForElementAndClick(
                 By.xpath("//*[contains(@text,'Search Wikipedia')]"),
                 "Cannot find 'Search Wikipedia' input",
