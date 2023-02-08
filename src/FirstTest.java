@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.ScreenOrientation;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -686,15 +687,10 @@ public class FirstTest {
                 30
         );
 
-        assertElementPresent(
+        notWaitForElementPresent(
                 By.id("org.wikipedia:id/view_page_title_text"),
                 "Element 'page_title' not enabled"
         );
-    }
-
-    private void assertElementPresent(By by, String error_message) {
-        WebElement element = waitForElementPresent(by, error_message, 0);
-        Assert.assertTrue(error_message, element.isEnabled());
     }
 
 
@@ -704,6 +700,11 @@ public class FirstTest {
         Assert.assertEquals(error_message, expected_value, actual_value);
     }
 
+    private WebElement notWaitForElementPresent(By by, String error_message) {
+        WebDriverWait wait = new WebDriverWait(driver, 0, 0);
+        wait.withMessage(error_message + "\n");
+        return wait.until(ExpectedConditions.presenceOfElementLocated(by));
+    }
 
     private WebElement waitForElementPresent(By by, String error_message, long timeoutInSeconds) {
         WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
