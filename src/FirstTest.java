@@ -32,7 +32,7 @@ public class FirstTest {
         capabilities.setCapability("appPackage", "org.wikipedia");
         capabilities.setCapability("appActivity", ".main.MainActivity");
         if (System.getProperty("os.name").equals("Linux")) {
-            capabilities.setCapability("app", "/home/sanek/IdeaProjects/JavaAutomation/apks/org.wikipedia.apk");
+            capabilities.setCapability("app", "/home/sanek/IdeaProjects/Lessions/secondLession/apks/org.wikipedia.apk");
         } else {
             capabilities.setCapability("app", "D:\\LearnQA\\AutoQA\\secondLession\\apks\\org.wikipedia.apk");
         }
