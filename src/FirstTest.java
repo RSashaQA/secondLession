@@ -5,7 +5,6 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.ScreenOrientation;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -39,8 +38,8 @@ public class FirstTest {
 
         driver = new AndroidDriver(new URL("http://localhost:4723/wd/hub"), capabilities);
 
-        String orientation = String.valueOf(driver.getOrientation());
-        if (orientation.equals("LANDSCAPE") == true) driver.rotate(ScreenOrientation.PORTRAIT);
+        if (driver.getOrientation().value().equals("LANDSCAPE"))
+            driver.rotate(ScreenOrientation.PORTRAIT);
     }
 
 
