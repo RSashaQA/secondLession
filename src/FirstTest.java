@@ -1,3 +1,4 @@
+import org.apache.xpath.operations.Bool;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -5,6 +6,7 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.ScreenOrientation;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -659,6 +661,41 @@ public class FirstTest {
                 title_text_inside_article
         );
     }
+
+    @Test
+    public void testEx6assertElementPresent()
+    {
+        waitForElementAndClick(
+                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                "Cannot find 'Search Wikipedia' input",
+                5
+        );
+
+        String search_value = "Java";
+        waitForElementAndSendKeys(
+                By.xpath("//*[contains(@text,'Search…')]"),
+                search_value,
+                "Cannot find search input '" + search_value + "'",
+                5
+        );
+
+        waitForElementAndClick(
+                By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_container']//*[@text='Object-oriented programming language']"),
+                "Cannot find 'Object-oriented programming language' search result",
+                30
+        );
+
+        assertElementPresent(
+                By.id("org.wikipedia:id/view_page_title_text"),
+                "Element 'page_title' not enabled"
+        );
+    }
+
+    private void assertElementPresent(By by, String error_message) {
+        WebElement element = waitForElementPresent(by, error_message, 0);
+        Assert.assertTrue(error_message, element.isEnabled());
+    }
+
 
     private void assertElementHasText(By by, String expected_value, String error_message) {
         WebElement element = waitForElementPresent(by, "Element " + by + " not found", 5);
