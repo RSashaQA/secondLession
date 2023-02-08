@@ -11,7 +11,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.net.URL;
-import java.util.Collections;
 import java.util.List;
 
 import io.appium.java_client.AppiumDriver;
@@ -301,7 +300,7 @@ public class FirstTest {
                 30
         );
 
-        Assert.assertTrue("Size of elements is 0",my_elements.size() > 1);
+        Assert.assertTrue("Size of elements is 0", my_elements.size() > 1);
 
 
         waitForElementAndClick(
@@ -492,6 +491,172 @@ public class FirstTest {
                 By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_container']//*[@text='Object-oriented programming language']"),
                 "Cannot find 'Object-oriented programming language' after returning from background " + search_input,
                 30
+        );
+    }
+
+    @Test
+    public void testTwoArticleToMyListThenDeleteOneOfThem() {
+        waitForElementAndClick(
+                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                "Cannot find 'Search Wikipedia' input",
+                5
+        );
+
+        String search_value = "Java";
+        waitForElementAndSendKeys(
+                By.xpath("//*[contains(@text,'Search…')]"),
+                search_value,
+                "Cannot find search input '" + search_value + "'",
+                5
+        );
+
+        waitForElementAndClick(
+                By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_container']//*[@text='Object-oriented programming language']"),
+                "Cannot find 'Object-oriented programming language' search result",
+                30
+        );
+
+        String article_page_title = "org.wikipedia:id/view_page_title_text";
+        waitForElementPresent(
+                By.id(article_page_title),
+                "Cant find title 'Java (programming language)'",
+                15
+        );
+
+        String xpath_button_more_options = "//android.widget.ImageView[@content-desc='More options']";
+        waitForElementAndClick(
+                By.xpath(xpath_button_more_options),
+                "Cannot find button to open 'More options'",
+                5
+        );
+
+        String xpath_add_to_reading_list = "//android.widget.TextView[@text='Add to reading list']";
+        waitForElementAndClick(
+                By.xpath(xpath_add_to_reading_list),
+                "Cannot find button 'Add to reading list' in to 'More options'",
+                5
+        );
+
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/onboarding_button"),
+                "Cannot find button 'onboarding'",
+                5
+        );
+
+        waitForElementAndClear(
+                By.id("org.wikipedia:id/text_input"),
+                "Cannot find 'Name of list' input",
+                5
+        );
+
+        String name_of_folder = "Learning programming";
+        waitForElementAndSendKeys(
+                By.id("org.wikipedia:id/text_input"),
+                name_of_folder,
+                "Cannot put text in to 'Name of list' input",
+                5
+        );
+
+        waitForElementAndClick(
+                By.xpath("//*[@text='OK']"),
+                "Cannot press 'OK' button",
+                5
+        );
+
+        waitForElementAndClick(
+                By.xpath("//android.widget.ImageButton[@content-desc='Navigate up']"),
+                "Cannot press 'CLOSE' button, cannot find X link",
+                5
+        );
+
+        waitForElementAndClick(
+                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                "Cannot find 'Search Wikipedia' input",
+                5
+        );
+
+        waitForElementAndSendKeys(
+                By.xpath("//*[contains(@text,'Search…')]"),
+                search_value,
+                "Cannot find search input",
+                5
+        );
+
+        waitForElementAndClick(
+                By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_container']//*[@text='Wikimedia list article']"),
+                "Cannot find 'Object-oriented programming language' search result",
+                30
+        );
+
+        waitForElementPresent(
+                By.id(article_page_title),
+                "Cant find title 'Java version history'",
+                15
+        );
+
+        waitForElementAndClick(
+                By.xpath(xpath_button_more_options),
+                "Cannot find button to open 'More options'",
+                5
+        );
+
+        waitForElementAndClick(
+                By.xpath(xpath_add_to_reading_list),
+                "Cannot find button 'Add to reading list' in to 'More options'",
+                5
+        );
+
+        waitForElementAndClick(
+                By.xpath("//*[@text='Learning programming']"),
+                "Cannot find folder '" + name_of_folder + "' for save to reading list",
+                5
+        );
+
+        waitForElementAndClick(
+                By.xpath("//android.widget.ImageButton[@content-desc='Navigate up']"),
+                "Cannot press 'CLOSE' button, cannot find X link",
+                5
+        );
+
+        waitForElementAndClick(
+                By.xpath("//android.widget.FrameLayout[@content-desc='My lists']"),
+                "Cannot find navigation button to 'My list'",
+                5
+        );
+
+        waitForElementAndClick(
+                By.xpath("//*[@text='" + name_of_folder + "']"),
+                "Cannot find '" + name_of_folder + "' in to 'My list'",
+                5
+        );
+
+        swipeElementToLeft(
+                By.xpath("//*[@text='Java (programming language)']"),
+                "Cannot find saved article"
+        );
+
+        String title_text_in_folder = waitForElementAndGetText(
+                By.xpath("//*[@text='Java version history']"),
+                "Cannot get text in article 'Java version history' in folder",
+                5
+        );
+
+        waitForElementAndClick(
+                By.xpath("//*[@text='Java version history']"),
+                "Cannot find article 'Java version history' in folder",
+                5
+        );
+
+        String title_text_inside_article = waitForElementAndGetText(
+                By.id(article_page_title),
+                "Cannot get text in article 'Java version history' inside article",
+                5
+        );
+
+        Assert.assertEquals(
+                "Title text in folder and inside article doesn't match",
+                title_text_in_folder,
+                title_text_inside_article
         );
     }
 
