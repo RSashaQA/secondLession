@@ -50,7 +50,7 @@ public class MainPageObject {
     }
 
     public WebElement waitForElementPresent(By by, String error_message) {
-        return waitForElementPresent(by, error_message, 5);
+        return waitForElementPresent(by, error_message, 15);
     }
 
     public WebElement waitForElementAndClick(By by, String error_message, long timeoutInSeconds) {
