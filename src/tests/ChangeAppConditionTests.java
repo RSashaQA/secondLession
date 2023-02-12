@@ -15,7 +15,7 @@ public class ChangeAppConditionTests extends CoreTestCase {
 
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
-        SearchPageObject.clickByArcticleWithSubString("Object-oriented programming language");
+        SearchPageObject.clickByArticleWithSubString("Object-oriented programming language");
 
         ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
 
