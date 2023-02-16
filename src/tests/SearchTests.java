@@ -127,4 +127,22 @@ public class SearchTests extends CoreTestCase {
                 title_text_inside_article
         );
     }
+
+    @Test
+    public void testSearchArticlesByTitleAndDescription(){
+
+        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject.initSearchInput();
+        String search_input = "Java";
+        String first_title = "Java";
+        String first_description = "Island of Indonesia, Southeast Asia";
+        String second_title = "JavaScript";
+        String second_description = "High-level programming language";
+        String third_title = "Java (programming language)";
+        String third_description = "Object-oriented programming language";
+        SearchPageObject.typeSearchLine(search_input);
+        SearchPageObject.waitForElementByTitleAndDescription(first_title, first_description);
+        SearchPageObject.waitForElementByTitleAndDescription(second_title, second_description);
+        SearchPageObject.waitForElementByTitleAndDescription(third_title, third_description);
+    }
 }
