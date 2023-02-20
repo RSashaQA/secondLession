@@ -25,17 +25,18 @@ public class CoreTestCase extends TestCase {
         capabilities.setCapability("automationName", "Appium");
         capabilities.setCapability("appPackage", "org.wikipedia");
         capabilities.setCapability("appActivity", ".main.MainActivity");
-        if (System.getProperty("os.name").equals("Linux")) {
+        if (System.getProperty("user.name").equals("Sanek")) {
             capabilities.setCapability("app", "/home/sanek/documents/secondLession/apks/org.wikipedia.apk");
-        } else {
+        } else if (System.getProperty("user.name").equals("Andrey")) {
+            capabilities.setCapability("app", "C:\\home\\sanek\\LearnQA\\secondLession\\apks\\org.wikipedia.apk");
+        } else if (System.getProperty("user.name").equals("chel")) {
             capabilities.setCapability("app", "D:\\LearnQA\\AutoQA\\secondLession\\apks\\org.wikipedia.apk");
         }
+            driver = new AndroidDriver(new URL(AppiumUrl), capabilities);
 
-        driver = new AndroidDriver(new URL(AppiumUrl), capabilities);
-
-        if (driver.getOrientation().name().equals("LANDSCAPE"))
-            driver.rotate(ScreenOrientation.PORTRAIT);
-    }
+            if (driver.getOrientation().name().equals("LANDSCAPE"))
+                driver.rotate(ScreenOrientation.PORTRAIT);
+        }
 
     @Override
     protected void tearDown() throws Exception {
@@ -43,16 +44,16 @@ public class CoreTestCase extends TestCase {
         super.tearDown();
     }
 
-    protected void rotateScreenPortrait() {
-        driver.rotate(ScreenOrientation.PORTRAIT);
-    }
+        protected void rotateScreenPortrait() {
+            driver.rotate(ScreenOrientation.PORTRAIT);
+        }
 
-    protected void rotateScreenLandscape() {
-        driver.rotate(ScreenOrientation.LANDSCAPE);
-    }
+        protected void rotateScreenLandscape() {
+            driver.rotate(ScreenOrientation.LANDSCAPE);
+        }
 
-    protected void backgroundApp(int seconds) {
-        driver.runAppInBackground(seconds);
-    }
+        protected void backgroundApp(int seconds) {
+            driver.runAppInBackground(seconds);
+        }
 
-}
+    }
